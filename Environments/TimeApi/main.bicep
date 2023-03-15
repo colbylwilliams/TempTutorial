@@ -16,7 +16,7 @@ param supportsHttpsTrafficOnly bool = true
   'dotnet'
   'java'
 ])
-param runtime string = 'dotnet'
+param runtime string = 'node'
 
 @description('Tags to apply to environment resources')
 param tags object = {}
@@ -45,7 +45,7 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   tags: tags
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAcctName
   location: location
   sku: {
