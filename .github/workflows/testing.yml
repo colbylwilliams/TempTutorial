@@ -25,7 +25,7 @@ jobs:
       AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName || 'Dev' }}
 
     steps:
-      - name: Validate Environment Type
+      - name: Validate Environment Secrets
         shell: python
         run: |
           import os
@@ -37,6 +37,15 @@ jobs:
           if environment_type not in ['Dev', 'Test', 'Prod']:
               print('::error title=Invalid environment type::Please set the environment to one of Dev, Test, or Prod.')
               exit(1)
+
+          required_secrets = { 'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal', 'BANG': 'POW' }
+
+          secrets = ${{ toJson( secrets ) }}
+
+          for k, v in required_secrets.items():
+              if k not in secrets:
+                  print(f'::error title=Missing required environment secret: {k}::Please create a new secret for the {environment_type} environment named {k} with {v}. https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-environment')
+                  exit(1)
 
       - name: Validate Repository Variables
         shell: python
@@ -53,18 +62,6 @@ jobs:
           for k, v in required_vars.items():
               if k not in variables:
                   print(f'::error title=Missing required repository variable: {k}::Please create a new repository variable named {k} with {v}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
-                  exit(1)
-
-      - name: Validate Environment Secrets
-        shell: python
-        run: |
-          required_secrets = { 'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal', 'BANG': 'POW' }
-
-          secrets = ${{ toJson( secrets ) }}
-
-          for k, v in required_secrets.items():
-              if k not in secrets:
-                  print(f'::error title=Missing required environment secret: {k}::Please create a new secret for the {environment_type} environment named {k} with {v}. https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-environment')
                   exit(1)
 
       - name: Echo
