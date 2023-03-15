@@ -56,7 +56,7 @@ jobs:
           secrets = ${{ toJson( secrets ) }}
           for k, v in required_secrets.items():
               if k not in secrets:
-                  print(f'::error title=Missing required environment secret: {k}::Please create a new environment secret for {environment_type} named {k} with {v}. https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-environment')
+                  print(f'::error title=Missing required environment secret: {k}::Please create a new secret for the {environment_type} environment named {k} with {v}. https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-environment')
                   exit(1)
 
       - name: Echo
