@@ -38,8 +38,8 @@ jobs:
       - id: get_config
         name: Set Outputs
         run: |
-          echo "name=ENVIRONMENT_NAME" >> $GITHUB_OUTPUT
-          echo "type=ENVIRONMENT_TYPE" >> $GITHUB_OUTPUT
+          echo "name=$ENVIRONMENT_NAME" >> $GITHUB_OUTPUT
+          echo "type=$ENVIRONMENT_TYPE" >> $GITHUB_OUTPUT
 
       # - name: Ensure GitHub Environments
       #   uses: actions/github-script@v6
