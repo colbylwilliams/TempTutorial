@@ -28,7 +28,12 @@ jobs:
       - name: Get Nonexisting var
         shell: python
         run: |
-          print (${{ toJson(vars) }})
+          import json
+
+          variables = json.loads('${{ toJson( vars ) }}')
+
+          for k, v in variables:
+              print(f'{k}: {v}')
 
       - name: Echo
         run: |
