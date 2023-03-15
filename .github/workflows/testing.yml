@@ -16,7 +16,7 @@ on:
           - Prod
 
 jobs:
-  dothing:
+  do_tha_thing:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environmentName }}
     env:
@@ -26,7 +26,7 @@ jobs:
       - name: Get Nonexisting var
         shell: python
         run: |
-          print (${{ vars }})
+          print (${{ toJson(vars) }})
 
       - name: Echo
         run: |
