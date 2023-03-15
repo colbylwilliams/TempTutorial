@@ -28,8 +28,8 @@ jobs:
     environment:
       name: ${{ needs.config.outputs.type }}
     env:
-      ENVIRONMENT_TYPE: ${{ needs.config.outputs.type }}
       ENVIRONMENT_NAME: ${{ needs.config.outputs.name }}
+      ENVIRONMENT_TYPE: ${{ needs.config.outputs.type }}
 
     steps:
       - name: Validate Environment Secrets
