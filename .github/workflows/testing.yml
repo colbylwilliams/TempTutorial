@@ -23,6 +23,12 @@ jobs:
       AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName }}
 
     steps:
+      - name: Get Nonexisting var
+        shell: python
+        run: |
+          for v in ['AZURE_TENANT_ID', 'AZURE_SUBSCRIPTION_ID', 'AZURE_DEVCENTER', 'AZURE_PROJECT', 'AZURE_NOT_THERE']:
+            print( ${{ vars[v] }} )
+
       - name: Echo
         run: |
           echo "environmentName: ${{ github.event.inputs.environmentName }}"
