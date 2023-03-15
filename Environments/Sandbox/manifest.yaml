@@ -4,8 +4,3 @@ summary: Empty sandbox environment
 description: Deploys an empty sandbox environment
 runner: ARM
 templatePath: azuredeploy.json
-
-parameters:
-  - name: name
-    type: string
-    required: true

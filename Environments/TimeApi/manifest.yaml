@@ -4,3 +4,12 @@ summary: Azure Function API
 description: Deploys an Azure Function App, Storage Account, and Application Insights
 runner: ARM
 templatePath: azuredeploy.json
+
+parameters:
+  - id: name
+    name: Name
+    type: string
+    required: true
+  - id: supportsHttpsTrafficOnly
+    name: 'Supports Https Traffic Only'
+    type: boolean
