@@ -3,13 +3,16 @@ name: ARM
 on:
   push:
     branches: [main]
-    paths:
-      # only run if bicep files changed
-      - 'Environments/**/*.bicep'
+    # paths:
+    # only run if bicep files changed
+    # - 'Environments/**/*.bicep'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v3
