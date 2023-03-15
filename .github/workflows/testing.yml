@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environmentName || 'Dev' }}
     env:
-      AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName || 'foo' }}
+      AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName || 'Dev' }}
 
     steps:
       - name: Validate Environment Type
@@ -35,7 +35,7 @@ jobs:
               exit(1)
 
           if environment_type not in ['Dev', 'Test', 'Prod']:
-              print('::error title=Invalid environment type:::Please set the environment to one of Dev, Test, or Prod.')
+              print('::error title=Invalid environment type::Please set the environment to one of Dev, Test, or Prod.')
               exit(1)
 
       - name: Validate Repository Variables
