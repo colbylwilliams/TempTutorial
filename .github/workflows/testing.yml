@@ -28,7 +28,8 @@ jobs:
     environment:
       name: ${{ needs.config.outputs.type }}
     env:
-      AZURE_ENVIRONMENT_TYPE: ${{ needs.config.outputs.type }}
+      ENVIRONMENT_TYPE: ${{ needs.config.outputs.type }}
+      ENVIRONMENT_NAME: ${{ needs.config.outputs.name }}
 
     steps:
       # - name: Validate Environment Secrets
@@ -36,8 +37,8 @@ jobs:
       #   run: |
       #     import os
 
-      #     if (environment_type := os.getenv('AZURE_ENVIRONMENT_TYPE')) is None:
-      #         print('::error title=Environment not set: AZURE_ENVIRONMENT_TYPE::Please set the environment variable AZURE_ENVIRONMENT_TYPE.')
+      #     if (environment_type := os.getenv('ENVIRONMENT_TYPE')) is None:
+      #         print('::error title=Environment not set: ENVIRONMENT_TYPE::Please set the environment variable ENVIRONMENT_TYPE.')
       #         exit(1)
 
       #     if environment_type not in ['Dev', 'Test', 'Prod']:
@@ -78,7 +79,8 @@ jobs:
           echo "AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}"
           echo "AZURE_DEVCENTER: ${{ vars.AZURE_DEVCENTER }}"
           echo "AZURE_PROJECT: ${{ vars.AZURE_PROJECT }}"
-          echo "AZURE_ENVIRONMENT_TYPE: ${{ env.AZURE_ENVIRONMENT_TYPE }}"
+          echo "ENVIRONMENT_TYPE: ${{ env.ENVIRONMENT_TYPE }}"
+          echo "ENVIRONMENT_NAME: ${{ env.ENVIRONMENT_NAME }}"
 
       - name: Install DevCenter CLI Extension
         run: az extension add --name devcenter --upgrade

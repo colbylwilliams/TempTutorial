@@ -13,3 +13,4 @@ parameters:
   - id: supportsHttpsTrafficOnly
     name: 'Supports Https Traffic Only'
     type: boolean
+    required: true
