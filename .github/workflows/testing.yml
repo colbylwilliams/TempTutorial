@@ -35,12 +35,12 @@ jobs:
               'AZURE_SUBSCRIPTION_ID': 'your Azure tenant Id (GUID)',
               'AZURE_DEVCENTER': 'the name of your dev center',
               'AZURE_PROJECT': 'the name of your dev center project',
-              # 'AZURE_NOT_THERE': 'the name of your dev center notthere'
+              'AZURE_NOT_THERE': 'the name of your dev center notthere'
           }
 
           required_secrets = {
-              'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal',
-              'AZURE_CLIENT_SECRET': 'the secret of your service principal'
+              'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal'
+              # 'AZURE_CLIENT_SECRET': 'the secret of your service principal'
           }
 
           if (environment_type := os.getenv('AZURE_ENVIRONMENT_TYPE')) is None:
