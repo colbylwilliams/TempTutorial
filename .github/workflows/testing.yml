@@ -38,7 +38,7 @@ jobs:
           for k in ['AZURE_TENANT_ID', 'AZURE_SUBSCRIPTION_ID', 'AZURE_DEVCENTER', 'AZURE_PROJECT', 'AZURE_NOT_THERE']:
               if k not in variables:
                   print(f'Missing required repository variable: {k}')
-                  print(f'::error title=Missing Repository variable: {k}::Missing required variable: {k}. Please create a new repository variable named {k}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
+                  print(f'::error title=Missing Repository variable: {k}::Missing required variable: {k}.\nPlease create a new repository variable named {k}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
                   exit(1)
 
       - name: Echo
