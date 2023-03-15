@@ -28,16 +28,35 @@ jobs:
       - name: Get Nonexisting var
         shell: python
         run: |
-          import json
+          import os
+
+          required_vars = {
+              'AZURE_TENANT_ID': 'your Azure tenant Id (GUID)',
+              'AZURE_SUBSCRIPTION_ID': 'your Azure tenant Id (GUID)',
+              'AZURE_DEVCENTER': 'the name of your dev center',
+              'AZURE_PROJECT': 'the name of your dev center project',
+              # 'AZURE_NOT_THERE': 'the name of your dev center notthere'
+          }
+
+          required_secrets = {
+              'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal',
+              'AZURE_CLIENT_SECRET': 'the secret of your service principal'
+          }
+
+          if environment_type := os.getenv('AZURE_ENVIRONMENT_TYPE') is None:
+              print('::error title=Environment not set: AZURE_ENVIRONMENT_TYPE::Please set the environment variable AZURE_ENVIRONMENT_TYPE.')
+              exit(1)
 
           variables = ${{ toJson( vars ) }}
-
-          for k, v in variables.items():
-              print(f'{k}: {v}')
-
-          for k in ['AZURE_TENANT_ID', 'AZURE_SUBSCRIPTION_ID', 'AZURE_DEVCENTER', 'AZURE_PROJECT', 'AZURE_NOT_THERE']:
+          for k, v in required_vars.items():
               if k not in variables:
-                  print(f'::error title=Missing required repository variable: {k}::Please create a new repository variable named {k}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
+                  print(f'::error title=Missing required repository variable: {k}::Please create a new repository variable named {k} with {v}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
+                  exit(1)
+
+          secrets = ${{ toJson( secrets ) }}
+          for k, v in required_secrets.items():
+              if k not in secrets:
+                  print(f'::error title=Missing required environment secret: {k}::Please create a new environment secret for {environment_type} named {k} with {v}. https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-environment')
                   exit(1)
 
       - name: Echo
