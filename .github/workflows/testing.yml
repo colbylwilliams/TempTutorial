@@ -32,7 +32,7 @@ jobs:
 
           variables = ${{ toJson( vars ) }}
 
-          for k, v in variables:
+          for k, v in variables.items():
               print(f'{k}: {v}')
 
       - name: Echo
