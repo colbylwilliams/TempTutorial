@@ -38,7 +38,9 @@ jobs:
               print('::error title=Invalid environment type::Please set the environment to one of Dev, Test, or Prod.')
               exit(1)
 
-          required_secrets = { 'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal', 'BANG': 'POW' }
+          required_secrets = {
+              'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal'
+          }
 
           secrets = ${{ toJson( secrets ) }}
 
