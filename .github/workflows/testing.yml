@@ -45,6 +45,9 @@ jobs:
       - name: Show Project
         run: az devcenter dev project show --dev-center ${{ vars.AZURE_DEVCENTER }} --name ${{ vars.AZURE_PROJECT }}
 
+      - name: List Catalog Items
+        run: az devcenter dev catalog-item list --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }}
+
       - name: List Env Types
         run: az devcenter dev environment-type list --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }}
 
