@@ -5,6 +5,8 @@ permissions:
   contents: read
 
 on:
+  push: # TODO: remove
+
   workflow_dispatch:
     inputs:
       environmentName:
@@ -18,9 +20,9 @@ on:
 jobs:
   do_tha_thing:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environmentName }}
+    environment: ${{ github.event.inputs.environmentName || 'Dev' }}
     env:
-      AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName }}
+      AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName || 'Dev' }}
 
     steps:
       - name: Get Nonexisting var
@@ -30,7 +32,6 @@ jobs:
 
       - name: Echo
         run: |
-          echo "environmentName: ${{ github.event.inputs.environmentName }}"
           echo "AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}"
           echo "AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}"
           echo "AZURE_DEVCENTER: ${{ vars.AZURE_DEVCENTER }}"
