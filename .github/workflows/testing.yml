@@ -27,8 +27,6 @@ jobs:
         shell: python
         run: |
           print (${{ vars }})
-          # for v in ['AZURE_TENANT_ID', 'AZURE_SUBSCRIPTION_ID', 'AZURE_DEVCENTER', 'AZURE_PROJECT', 'AZURE_NOT_THERE']:
-          #   print( ${{ vars[v] }} )
 
       - name: Echo
         run: |
