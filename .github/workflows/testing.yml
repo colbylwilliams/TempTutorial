@@ -30,12 +30,15 @@ jobs:
       - name: Az CLI login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      - name: Show Project
+        run: az devcenter dev project show --dev-center ${{ vars.AZURE_DEVCENTER }} --name ${{ vars.AZURE_PROJECT }}
+
       - name: List Env Types
-        run: az devcenter dev environment-type list -d TutorialDevCenter --project TutorialProjectA
+        run: az devcenter dev environment-type list --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }}
 
       # - name: 'Run az commands'
       #   run: |
