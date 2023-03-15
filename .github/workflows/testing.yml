@@ -42,7 +42,7 @@ jobs:
               exit(1)
 
           if environment_type not in ['Dev', 'Test', 'Prod']:
-              print('::error title=Invalid environment type: {environment_type}::Please set the environment to one of Dev, Test, or Prod.')
+              print(f'::error title=Invalid environment type: {environment_type}::Please set the environment to one of Dev, Test, or Prod.')
               exit(1)
 
           required_secrets = {
