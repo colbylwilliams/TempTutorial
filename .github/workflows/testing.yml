@@ -21,8 +21,8 @@ jobs:
   do_tha_thing:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environmentName || 'Dev' }}
-    env:
-      AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName || 'Dev' }}
+    # env:
+    # AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName || 'Dev' }}
 
     steps:
       - name: Get Nonexisting var
