@@ -30,7 +30,7 @@ jobs:
         run: |
           import json
 
-          variables = json.loads('${{ toJson( vars ) }}')
+          variables = json.loads(${{ toJson( vars ) }})
 
           for k, v in variables:
               print(f'{k}: {v}')
