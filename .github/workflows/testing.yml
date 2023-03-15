@@ -19,6 +19,8 @@ jobs:
   dothing:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environmentName }}
+    env:
+      AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName }}
 
     steps:
       - name: Echo
@@ -26,6 +28,9 @@ jobs:
           echo "environmentName: ${{ github.event.inputs.environmentName }}"
           echo "AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}"
           echo "AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}"
+          echo "AZURE_DEVCENTER: ${{ vars.AZURE_DEVCENTER }}"
+          echo "AZURE_PROJECT: ${{ vars.AZURE_PROJECT }}"
+          echo "AZURE_ENVIRONMENT_TYPE: ${{ env.AZURE_ENVIRONMENT_TYPE }}"
 
       - name: Install DevCenter CLI Extension
         run: az extension add --name devcenter --upgrade
