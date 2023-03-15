@@ -16,7 +16,7 @@ param supportsHttpsTrafficOnly bool = true
   'dotnet'
   'java'
 ])
-param runtime string = 'node'
+param runtime string = 'dotnet'
 
 @description('Tags to apply to environment resources')
 param tags object = {}
