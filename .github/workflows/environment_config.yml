@@ -32,8 +32,8 @@ jobs:
       type: ${{ steps.get_config.outputs.type }}
 
     steps:
-      - run: echo "- **Environment Name**  $ENVIRONMENT_NAME" >> $GITHUB_STEP_SUMMARY
-      - run: echo "- **Environment Type**  $ENVIRONMENT_TYPE" >> $GITHUB_STEP_SUMMARY
+      # - run: echo "- **Environment Name**  $ENVIRONMENT_NAME" >> $GITHUB_STEP_SUMMARY
+      # - run: echo "- **Environment Type**  $ENVIRONMENT_TYPE" >> $GITHUB_STEP_SUMMARY
 
       - id: get_config
         name: Set Outputs
