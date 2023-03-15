@@ -21,39 +21,48 @@ jobs:
   do_tha_thing:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environmentName || 'Dev' }}
-    # env:
-    # AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName || 'Dev' }}
+    env:
+      AZURE_ENVIRONMENT_TYPE: ${{ github.event.inputs.environmentName || 'foo' }}
 
     steps:
-      - name: Get Nonexisting var
+      - name: Validate Environment Type
         shell: python
         run: |
           import os
-
-          required_vars = {
-              'AZURE_TENANT_ID': 'your Azure tenant Id (GUID)',
-              'AZURE_SUBSCRIPTION_ID': 'your Azure tenant Id (GUID)',
-              'AZURE_DEVCENTER': 'the name of your dev center',
-              'AZURE_PROJECT': 'the name of your dev center project',
-              'AZURE_NOT_THERE': 'the name of your dev center notthere'
-          }
-
-          required_secrets = {
-              'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal'
-              # 'AZURE_CLIENT_SECRET': 'the secret of your service principal'
-          }
 
           if (environment_type := os.getenv('AZURE_ENVIRONMENT_TYPE')) is None:
               print('::error title=Environment not set: AZURE_ENVIRONMENT_TYPE::Please set the environment variable AZURE_ENVIRONMENT_TYPE.')
               exit(1)
 
+          if environment_type not in ['Dev', 'Test', 'Prod']:
+              print('::error title=Invalid environment type:::Please set the environment to one of Dev, Test, or Prod.')
+              exit(1)
+
+      - name: Validate Repository Variables
+        shell: python
+        run: |
+          required_vars = {
+              'AZURE_TENANT_ID': 'your Azure tenant Id (GUID)',
+              'AZURE_SUBSCRIPTION_ID': 'your Azure tenant Id (GUID)',
+              'AZURE_DEVCENTER': 'the name of your dev center',
+              'AZURE_PROJECT': 'the name of your dev center project',
+              'FOO_BAR': 'THE FOO'
+          }
+
           variables = ${{ toJson( vars ) }}
+
           for k, v in required_vars.items():
               if k not in variables:
                   print(f'::error title=Missing required repository variable: {k}::Please create a new repository variable named {k} with {v}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
                   exit(1)
 
+      - name: Validate Environment Secrets
+        shell: python
+        run: |
+          required_secrets = { 'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal', 'BANG': 'POW' }
+
           secrets = ${{ toJson( secrets ) }}
+
           for k, v in required_secrets.items():
               if k not in secrets:
                   print(f'::error title=Missing required environment secret: {k}::Please create a new secret for the {environment_type} environment named {k} with {v}. https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-environment')
