@@ -43,7 +43,7 @@ jobs:
               'AZURE_CLIENT_SECRET': 'the secret of your service principal'
           }
 
-          if environment_type := os.getenv('AZURE_ENVIRONMENT_TYPE') is None:
+          if (environment_type := os.getenv('AZURE_ENVIRONMENT_TYPE')) is None:
               print('::error title=Environment not set: AZURE_ENVIRONMENT_TYPE::Please set the environment variable AZURE_ENVIRONMENT_TYPE.')
               exit(1)
 
