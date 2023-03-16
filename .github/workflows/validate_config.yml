@@ -57,7 +57,8 @@ jobs:
               if k not in variables:
                   print(f'::error title=Missing required repository variable: {k}::Please create a new repository variable named {k} with {v}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
                   exit(1)
-              summary.append(f'| {k} | {v} |')
+
+              summary.append(f'| {k} | {variables[k]} |')
 
           github_step_summary = os.environ.get('GITHUB_STEP_SUMMARY', None)
           if github_step_summary:
