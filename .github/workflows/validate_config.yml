@@ -40,6 +40,8 @@ jobs:
       - name: Validate Repository Variables
         shell: python
         run: |
+          import os
+
           required_vars = {
               'AZURE_TENANT_ID': 'your Azure tenant Id (GUID)',
               'AZURE_SUBSCRIPTION_ID': 'your Azure subscription Id (GUID)',
@@ -49,10 +51,18 @@ jobs:
 
           variables = ${{ toJson( vars ) }}
 
+          summary = [ '|  |  |', '| --- | --- |' ]
+
           for k, v in required_vars.items():
               if k not in variables:
                   print(f'::error title=Missing required repository variable: {k}::Please create a new repository variable named {k} with {v}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
                   exit(1)
+              summary.append(f'| {k} | {v} |')
+
+          github_step_summary = os.environ.get('GITHUB_STEP_SUMMARY', None)
+          if github_step_summary:
+              with open(github_step_summary, 'a+') as f:
+                  f.write('\n'.join(summary))
 
       - name: Print Summary
         shell: python
@@ -60,7 +70,7 @@ jobs:
           import os
 
           tenant_id = '${{ vars.AZURE_TENANT_ID }}'
-          subscription_id = '${{ vars.AZURE_TENANT_ID }}'
+          subscription_id = '${{ vars.AZURE_SUBSCRIPTION_ID }}'
           devcenter_name = '${{ vars.AZURE_DEVCENTER }}'
           project_name = '${{ vars.AZURE_PROJECT }}'
 
