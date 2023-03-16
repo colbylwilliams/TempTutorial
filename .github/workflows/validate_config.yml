@@ -67,10 +67,10 @@ jobs:
           summary = [
               '|  |  |',
               '| --- | --- |',
-              f'| Tenant ID | {env_name}',
-              f'| Subscription ID | {env_type}',
-              f'| Dev Center name | {env_type}',
-              f'| Project name | {env_type}'
+              f'| Tenant ID | {tenant_id}',
+              f'| Subscription ID | {subscription_id}',
+              f'| Dev Center name | {devcenter_name}',
+              f'| Project name | {project_name}'
           ]
 
           github_step_summary = os.environ.get('GITHUB_STEP_SUMMARY', None)
