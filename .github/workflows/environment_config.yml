@@ -41,3 +41,21 @@ jobs:
         run: |
           echo "name=$ENVIRONMENT_NAME" >> $GITHUB_OUTPUT
           echo "type=$ENVIRONMENT_TYPE" >> $GITHUB_OUTPUT
+
+      - name: Print Summary
+        shell: python
+        run: |
+          env_name = ${{ steps.get_config.outputs.name }}
+          env_type = ${{ steps.get_config.outputs.type }}
+
+          summary = [
+              '|  |  |',
+              '| --- | --- |',
+              f'| Environment name | {env_name}',
+              f'| Environment type | {env_type}'
+          ]
+
+          github_step_summary = os.environ.get('GITHUB_STEP_SUMMARY', None)
+          if github_step_summary:
+              with open(github_step_summary, 'a+') as f:
+                  f.write('\n'.join(summary))

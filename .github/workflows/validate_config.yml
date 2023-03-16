@@ -53,3 +53,25 @@ jobs:
               if k not in variables:
                   print(f'::error title=Missing required repository variable: {k}::Please create a new repository variable named {k} with {v}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
                   exit(1)
+
+      - name: Print Summary
+        shell: python
+        run: |
+          tenant_id = ${{ vars.AZURE_TENANT_ID }}
+          subscription_id = ${{ vars.AZURE_TENANT_ID }}
+          devcenter_name = ${{ vars.AZURE_DEVCENTER }}
+          project_name = ${{ vars.AZURE_PROJECT }}
+
+          summary = [
+              '|  |  |',
+              '| --- | --- |',
+              f'| Tenant ID | {env_name}',
+              f'| Subscription ID | {env_type}',
+              f'| Dev Center name | {env_type}',
+              f'| Project name | {env_type}'
+          ]
+
+          github_step_summary = os.environ.get('GITHUB_STEP_SUMMARY', None)
+          if github_step_summary:
+              with open(github_step_summary, 'a+') as f:
+                  f.write('\n'.join(summary))
