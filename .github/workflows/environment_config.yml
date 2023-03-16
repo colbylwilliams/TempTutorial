@@ -45,8 +45,8 @@ jobs:
       - name: Print Summary
         shell: python
         run: |
-          env_name = ${{ steps.get_config.outputs.name }}
-          env_type = ${{ steps.get_config.outputs.type }}
+          env_name = '${{ steps.get_config.outputs.name }}'
+          env_type = '${{ steps.get_config.outputs.type }}'
 
           summary = [
               '|  |  |',
