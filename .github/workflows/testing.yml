@@ -24,7 +24,7 @@ jobs:
 
   validate:
     name: Validate Configuration
-    uses: ./.github/workflows/validate_config.yaml
+    uses: ./.github/workflows/validate_config.yml
     needs: config
     secrets: inherit
     with:
