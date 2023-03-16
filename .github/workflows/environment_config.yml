@@ -50,9 +50,7 @@ jobs:
           env_name = '${{ steps.get_config.outputs.name }}'
           env_type = '${{ steps.get_config.outputs.type }}'
 
-          summary = [
-              '|  |  |',
-              '| --- | --- |',
+          summary = [ '|  |  |', '| --- | --- |',
               f'| Environment type | {env_type}',
               f'| Environment name | {env_name}'
           ]
