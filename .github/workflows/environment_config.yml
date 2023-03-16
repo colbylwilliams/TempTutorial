@@ -28,7 +28,7 @@ env:
 
 jobs:
   env_config:
-    name: Config
+    name: Resolve Configuration
     runs-on: ubuntu-latest
     # Map the job outputs to step outputs
     outputs:

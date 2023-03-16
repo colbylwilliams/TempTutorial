@@ -32,7 +32,9 @@ jobs:
 
   do_tha_thing:
     runs-on: ubuntu-latest
-    needs: config
+    needs:
+      - config
+      - validate
     environment: ${{ needs.config.outputs.type }}
     env:
       ENVIRONMENT_NAME: ${{ needs.config.outputs.name }}

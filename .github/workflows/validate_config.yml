@@ -10,6 +10,7 @@ on:
 
 jobs:
   validate:
+    name: Validate Configuration
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
 
@@ -19,9 +20,7 @@ jobs:
         run: |
           import os
 
-          if (environment_type := os.getenv('ENVIRONMENT_TYPE')) is None:
-              print('::error title=Environment not set: ENVIRONMENT_TYPE::Please set the environment variable ENVIRONMENT_TYPE.')
-              exit(1)
+          environment_type = ${{ inputs.environment }}
 
           if environment_type not in ['Dev', 'Test', 'Prod']:
               print(f'::error title=Invalid environment type: {environment_type}::Please set the environment to one of Dev, Test, or Prod.')
