@@ -57,6 +57,8 @@ jobs:
       - name: Print Summary
         shell: python
         run: |
+          import os
+
           tenant_id = ${{ vars.AZURE_TENANT_ID }}
           subscription_id = ${{ vars.AZURE_TENANT_ID }}
           devcenter_name = ${{ vars.AZURE_DEVCENTER }}

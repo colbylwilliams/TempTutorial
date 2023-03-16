@@ -45,6 +45,8 @@ jobs:
       - name: Print Summary
         shell: python
         run: |
+          import os
+
           env_name = '${{ steps.get_config.outputs.name }}'
           env_type = '${{ steps.get_config.outputs.type }}'
 
