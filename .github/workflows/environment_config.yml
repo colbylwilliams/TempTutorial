@@ -53,11 +53,10 @@ jobs:
           summary = [
               '|  |  |',
               '| --- | --- |',
-              f'| Environment name | {env_name}',
-              f'| Environment type | {env_type}'
+              f'| Environment type | {env_type}',
+              f'| Environment name | {env_name}'
           ]
 
           github_step_summary = os.environ.get('GITHUB_STEP_SUMMARY', None)
-          if github_step_summary:
-              with open(github_step_summary, 'a+') as f:
-                  f.write('\n'.join(summary))
+          with open(github_step_summary, 'a+') as f:
+              f.write('\n'.join(summary))
