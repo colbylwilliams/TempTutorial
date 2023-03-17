@@ -30,31 +30,42 @@ jobs:
   env_config:
     name: Resolve Configuration
     runs-on: ubuntu-latest
+
     # Map the job outputs to step outputs
     outputs:
       name: ${{ steps.get_config.outputs.name }}
       type: ${{ steps.get_config.outputs.type }}
 
     steps:
+      - name: Validate
+        shell: python
+        run: |
+          import os
+
+          environment_type = '${{ env.ENVIRONMENT_TYPE }}'
+
+          if environment_type not in ['Dev', 'Test', 'Prod']:
+              print(f'::error title=Invalid environment type: {environment_type}::Please set the environment to one of Dev, Test, or Prod.')
+              exit(1)
+
+          required_vars = {
+              'AZURE_PROJECT': 'the name of your dev center project',
+              'AZURE_DEVCENTER': 'the name of your dev center',
+              'AZURE_CATALOG': 'a value of: Environments',
+              'AZURE_CATALOG_ITEM': 'a value of: FunctionApp',
+              'AZURE_TENANT_ID': 'your Azure tenant Id (GUID)',
+              'AZURE_SUBSCRIPTION_ID': 'your Azure subscription Id (GUID)'
+          }
+
+          variables = ${{ toJson( vars ) }}
+
+          for k, v in required_vars.items():
+              if k not in variables:
+                  print(f'::error title=Missing required repository variable: {k}::Please create a new repository variable named {k} with {v}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
+                  exit(1)
+
       - id: get_config
         name: Set Outputs
         run: |
           echo "name=$ENVIRONMENT_NAME" >> $GITHUB_OUTPUT
           echo "type=$ENVIRONMENT_TYPE" >> $GITHUB_OUTPUT
-
-      - name: Print Summary
-        shell: python
-        run: |
-          import os
-
-          env_name = '${{ steps.get_config.outputs.name }}'
-          env_type = '${{ steps.get_config.outputs.type }}'
-
-          summary = [ '|  |  |', '| --- | --- |',
-              f'| Environment type | {env_type}',
-              f'| Environment name | {env_name}'
-          ]
-
-          github_step_summary = os.environ.get('GITHUB_STEP_SUMMARY', None)
-          with open(github_step_summary, 'a+') as f:
-              f.write('\n'.join(summary))

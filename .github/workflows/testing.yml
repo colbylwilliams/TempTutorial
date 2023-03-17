@@ -22,14 +22,6 @@ jobs:
     name: Get Configuration
     uses: ./.github/workflows/environment_config.yml
 
-  validate:
-    name: Validate Configuration
-    uses: ./.github/workflows/validate_config.yml
-    needs: config
-    secrets: inherit
-    with:
-      environment: ${{ needs.config.outputs.type }}
-
   do_tha_thing:
     runs-on: ubuntu-latest
     needs:
@@ -41,53 +33,14 @@ jobs:
       ENVIRONMENT_TYPE: ${{ needs.config.outputs.type }}
 
     steps:
-      #   - name: Validate Environment Secrets
-      #     shell: python
-      #     run: |
-      #       import os
-
-      #       if (environment_type := os.getenv('ENVIRONMENT_TYPE')) is None:
-      #           print('::error title=Environment not set: ENVIRONMENT_TYPE::Please set the environment variable ENVIRONMENT_TYPE.')
-      #           exit(1)
-
-      #       if environment_type not in ['Dev', 'Test', 'Prod']:
-      #           print(f'::error title=Invalid environment type: {environment_type}::Please set the environment to one of Dev, Test, or Prod.')
-      #           exit(1)
-
-      #       required_secrets = {
-      #           'AZURE_CLIENT_ID': 'the app id (or client id) of your service principal'
-      #       }
-
-      #       secrets = ${{ toJson( secrets ) }}
-
-      #       for k, v in required_secrets.items():
-      #           if k not in secrets:
-      #               print(f'::error title=Missing required environment secret: {k}::Please create a new secret for the {environment_type} environment named {k} with {v}. https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-environment')
-      #               exit(1)
-
-      #   - name: Validate Repository Variables
-      #     shell: python
-      #     run: |
-      #       required_vars = {
-      #           'AZURE_TENANT_ID': 'your Azure tenant Id (GUID)',
-      #           'AZURE_SUBSCRIPTION_ID': 'your Azure subscription Id (GUID)',
-      #           'AZURE_DEVCENTER': 'the name of your dev center',
-      #           'AZURE_PROJECT': 'the name of your dev center project'
-      #       }
-
-      #       variables = ${{ toJson( vars ) }}
-
-      #       for k, v in required_vars.items():
-      #           if k not in variables:
-      #               print(f'::error title=Missing required repository variable: {k}::Please create a new repository variable named {k} with {v}. https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository')
-      #               exit(1)
-
       - name: Echo
         run: |
-          echo "AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}"
-          echo "AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}"
-          echo "AZURE_DEVCENTER: ${{ vars.AZURE_DEVCENTER }}"
           echo "AZURE_PROJECT: ${{ vars.AZURE_PROJECT }}"
+          echo "AZURE_DEVCENTER: ${{ vars.AZURE_DEVCENTER }}"
+          echo "AZURE_CATALOG: ${{ vars.AZURE_CATALOG }}"
+          echo "AZURE_CATALOG_ITEM: ${{ vars.AZURE_CATALOG_ITEM }}"
+          echo "AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}"
+          echo "AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}"
           echo "ENVIRONMENT_TYPE: ${{ env.ENVIRONMENT_TYPE }}"
           echo "ENVIRONMENT_NAME: ${{ env.ENVIRONMENT_NAME }}"
 
